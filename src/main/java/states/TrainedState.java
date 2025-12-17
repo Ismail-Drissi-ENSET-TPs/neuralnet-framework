@@ -2,8 +2,7 @@ package states;
 
 import entities.Layer;
 import entities.NeuralNetwork;
-import entities.Node;
-import enums.NNState;
+import entities.Neuron;
 
 public class TrainedState implements INetworkState {
     @Override
@@ -18,11 +17,11 @@ public class TrainedState implements INetworkState {
         double[] currentOutput = x;
 
         for (Layer layer : nn.getLayers()) {
-            double[] nextOutput = new double[layer.getNodes().size()];
+            double[] nextOutput = new double[layer.getNeurons().size()];
             int i = 0;
 
-            for (Node node : layer.getNodes()) {
-                nextOutput[i++] = node.activate(currentOutput);
+            for (Neuron neuron : layer.getNeurons()) {
+                nextOutput[i++] = neuron.activate(currentOutput);
             }
 
             currentOutput = nextOutput;

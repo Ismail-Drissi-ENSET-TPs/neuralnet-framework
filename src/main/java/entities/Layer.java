@@ -9,5 +9,5 @@ import java.util.List;
 @AllArgsConstructor
 @Data @Builder
 public class Layer {
-    List<Node> nodes;
+    List<Neuron> neurons;
 }

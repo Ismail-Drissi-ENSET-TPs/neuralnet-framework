@@ -5,13 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
 @Data
 @Builder
-public class Node {
+public class Neuron {
     IActivationFunction activationFunction;
     double bias;
     List<Edge> edges;

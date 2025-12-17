@@ -1,9 +1,6 @@
 package states;
 
-import entities.Layer;
 import entities.NeuralNetwork;
-import entities.Node;
-import enums.NNState;
 
 public class TrainingState implements INetworkState {
     @Override

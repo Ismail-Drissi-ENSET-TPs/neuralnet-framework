@@ -8,6 +8,6 @@ import lombok.Data;
 @Data @Builder
 public class Edge {
     double weight;
-    Node prev;
-    Node next;
+    Neuron prev;
+    Neuron next;
 }
