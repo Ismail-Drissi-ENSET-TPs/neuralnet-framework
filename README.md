@@ -9,6 +9,9 @@ Le réseau de neurones est composé de :
 * connexions pondérées
 * fonctions d’activation interchangeables
 
+Diagramme UML :
+![](screenshots/neuralnet.png)
+
 Il expose des opérations principales telles que :
 
 * `train(...)`
@@ -31,7 +34,7 @@ Exemples :
 
 Chaque neurone délègue le calcul de l’activation à une instance de `ActivationFunction`.
 
-📷 Diagramme UML :
+Diagramme UML :
 ![](screenshots/functions.png)
 
 ---
@@ -41,7 +44,7 @@ Chaque neurone délègue le calcul de l’activation à une instance de `Activat
 Certaines fonctions d’activation anciennes implémentent une interface incompatible avec celle utilisée par les neurones.
 Le patron **Adapter** permet d’intégrer ces composants sans modifier leur code.
 
-📷 Diagramme UML :
+Diagramme UML :
 ![](screenshots/adapter.png)
 
 ---
@@ -59,7 +62,7 @@ Le comportement du réseau dépend de son état :
 * `predict()` n’est autorisée que dans l’état *Trained*
 * `train()` déclenche la transition vers l’état *Training*
 
-📷 Diagramme UML :
+Diagramme UML :
 ![](screenshots/state.png)
 
 ---
@@ -69,10 +72,10 @@ Le comportement du réseau dépend de son état :
 Les composants dépendants (ex. : tableau de bord, monitoring) doivent être notifiés lorsque l’état du réseau change.
 Le patron **Observer** permet une notification automatique sans couplage fort.
 
-📷 Diagramme UML :
+Diagramme UML :
 ![](screenshots/observer.png)
 
-## 🧪 Qualités de l’architecture
+## Qualités de l’architecture
 
 * ✅ Respect des principes **SOLID**
 * ✅ Faible couplage
