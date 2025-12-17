@@ -70,7 +70,7 @@ Les composants dépendants (ex. : tableau de bord, monitoring) doivent être not
 Le patron **Observer** permet une notification automatique sans couplage fort.
 
 📷 Diagramme UML :
-![](screenshots/neuralnet.png)
+![](screenshots/observer.png)
 
 ## 🧪 Qualités de l’architecture
 
