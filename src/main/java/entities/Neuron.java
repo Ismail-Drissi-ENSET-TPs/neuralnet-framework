@@ -7,13 +7,43 @@ import lombok.Data;
 
 import java.util.List;
 
-@AllArgsConstructor
-@Data
-@Builder
 public class Neuron {
     IActivationFunction activationFunction;
     double bias;
     List<Edge> edges;
+
+    public Neuron(IActivationFunction activationFunction, double bias, List<Edge> edges) {
+        this.activationFunction = activationFunction;
+        this.bias = bias;
+        this.edges = edges;
+    }
+
+    public Neuron() {
+    }
+
+    public void setActivationFunction(IActivationFunction activationFunction) {
+        this.activationFunction = activationFunction;
+    }
+
+    public void setBias(double bias) {
+        this.bias = bias;
+    }
+
+    public void setEdges(List<Edge> edges) {
+        this.edges = edges;
+    }
+
+    public IActivationFunction getActivationFunction() {
+        return activationFunction;
+    }
+
+    public double getBias() {
+        return bias;
+    }
+
+    public List<Edge> getEdges() {
+        return edges;
+    }
 
     public double activate(double[] inputs){
         double z = bias;

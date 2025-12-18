@@ -1,3 +1,5 @@
+import annotations.SecuredBy;
+import context.SecurityContext;
 import entities.Edge;
 import entities.Layer;
 import entities.NeuralNetwork;
@@ -5,50 +7,97 @@ import entities.Neuron;
 import functions.SigmoidFunction;
 import observers.Dashboard;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Application {
+
+    @SecuredBy(roles = {"ADMIN"})
     public static void main(String[] args) {
-        Dashboard dashboard = new Dashboard();
+        SecurityContext.authenticate("ismail", "1234", new String[]{"ADMIN"});
         NeuralNetwork neuralNetwork = new NeuralNetwork();
-        neuralNetwork.add(dashboard);
 
-        Neuron neuron1 = Neuron.builder().bias(0).activationFunction(new SigmoidFunction()).build();
-        Neuron neuron2 = Neuron.builder().bias(1).activationFunction(new SigmoidFunction()).build();
-        Layer layer1 = Layer.builder().neurons(List.of(neuron1, neuron2)).build();
-        Neuron neuron1_layer2 = Neuron.builder().bias(1).activationFunction(new SigmoidFunction()).build();
-        Neuron neuron2_layer2 = Neuron.builder().bias(0).activationFunction(new SigmoidFunction()).build();
-        Neuron neuron3_layer2 = Neuron.builder().bias(1).activationFunction(new SigmoidFunction()).build();
-        Layer layer2 = Layer.builder().neurons(List.of(neuron1_layer2, neuron2_layer2, neuron3_layer2)).build();
-        Edge edge1_layer1 = Edge.builder().prev(neuron1).next(neuron1_layer2).build();
-        Edge edge2_layer1 = Edge.builder().prev(neuron1).next(neuron2_layer2).build();
-        Edge edge3_layer1 = Edge.builder().prev(neuron1).next(neuron3_layer2).build();
+        Dashboard dashboard = new Dashboard(neuralNetwork);
 
+        // -------- Layer 1 neurons --------
+        Neuron neuron1 = new Neuron();
+        neuron1.setBias(0);
+        neuron1.setActivationFunction(new SigmoidFunction());
 
-        Edge edge4_layer1 = Edge.builder().prev(neuron2).next(neuron1_layer2).build();
-        Edge edge5_layer1 = Edge.builder().prev(neuron2).next(neuron2_layer2).build();
-        Edge edge6_layer1 = Edge.builder().prev(neuron2).next(neuron3_layer2).build();
+        Neuron neuron2 = new Neuron();
+        neuron2.setBias(1);
+        neuron2.setActivationFunction(new SigmoidFunction());
 
+        Layer layer1 = new Layer();
+        layer1.setNeurons(List.of(neuron1, neuron2));
 
-        neuron1_layer2.setEdges(List.of(edge1_layer1));
-        neuron1_layer2.setEdges(List.of(edge4_layer1));
+        // -------- Layer 2 neurons --------
+        Neuron neuron1_layer2 = new Neuron();
+        neuron1_layer2.setBias(1);
+        neuron1_layer2.setActivationFunction(new SigmoidFunction());
+        neuron1_layer2.setEdges(new ArrayList<>());
 
-        neuron2_layer2.setEdges(List.of(edge2_layer1));
-        neuron2_layer2.setEdges(List.of(edge5_layer1));
+        Neuron neuron2_layer2 = new Neuron();
+        neuron2_layer2.setBias(0);
+        neuron2_layer2.setActivationFunction(new SigmoidFunction());
+        neuron2_layer2.setEdges(new ArrayList<>());
 
-        neuron3_layer2.setEdges(List.of(edge3_layer1));
-        neuron3_layer2.setEdges(List.of(edge6_layer1));
+        Neuron neuron3_layer2 = new Neuron();
+        neuron3_layer2.setBias(1);
+        neuron3_layer2.setActivationFunction(new SigmoidFunction());
+        neuron3_layer2.setEdges(new ArrayList<>());
+
+        Layer layer2 = new Layer();
+        layer2.setNeurons(List.of(
+                neuron1_layer2,
+                neuron2_layer2,
+                neuron3_layer2
+        ));
+
+        // -------- Edges --------
+        Edge edge1 = new Edge();
+        edge1.setPrev(neuron1);
+        edge1.setNext(neuron1_layer2);
+
+        Edge edge2 = new Edge();
+        edge2.setPrev(neuron1);
+        edge2.setNext(neuron2_layer2);
+
+        Edge edge3 = new Edge();
+        edge3.setPrev(neuron1);
+        edge3.setNext(neuron3_layer2);
+
+        Edge edge4 = new Edge();
+        edge4.setPrev(neuron2);
+        edge4.setNext(neuron1_layer2);
+
+        Edge edge5 = new Edge();
+        edge5.setPrev(neuron2);
+        edge5.setNext(neuron2_layer2);
+
+        Edge edge6 = new Edge();
+        edge6.setPrev(neuron2);
+        edge6.setNext(neuron3_layer2);
+
+        // -------- Attach edges (IMPORTANT: add, don't overwrite) --------
+        neuron1_layer2.getEdges().add(edge1);
+        neuron1_layer2.getEdges().add(edge4);
+
+        neuron2_layer2.getEdges().add(edge2);
+        neuron2_layer2.getEdges().add(edge5);
+
+        neuron3_layer2.getEdges().add(edge3);
+        neuron3_layer2.getEdges().add(edge6);
+
+        // -------- Neural network --------
         neuralNetwork.setLayers(List.of(layer1, layer2));
-
 
         neuralNetwork.train();
 
         double[] output = neuralNetwork.predict(new double[]{1, 2});
 
-
-        for (int i = 0; i < output.length; i++) {
-            System.out.print(output[i] + ", ");
+        for (double v : output) {
+            System.out.print(v + ", ");
         }
-
     }
 }

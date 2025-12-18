@@ -20,7 +20,21 @@
             <artifactId>lombok</artifactId>
             <version>1.18.42</version>
         </dependency>
+        <!-- AspectJ Runtime -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.9.25</version>
+        </dependency>
+
+        <!-- AspectJ Weaver for annotation-based aspects -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.9.25</version>
+        </dependency>
     </dependencies>
+
 
     <build>
         <plugins>
